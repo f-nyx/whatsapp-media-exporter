@@ -1,6 +1,6 @@
 import { Logger, pino } from 'pino'
 import pretty from 'pino-pretty'
-import { AppConfig } from '@extractor/src/AppConfig'
+import { AppConfig } from '@exporter/src/AppConfig'
 
 /** Creates a logger with the specified prefix.
  *

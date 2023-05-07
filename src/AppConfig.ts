@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { Contact } from '@extractor/src/domain/model/Contact'
+import { Contact } from '@exporter/src/domain/model/Contact'
 
 const EXPORTER_DB_FILE = 'exporter.db'
 

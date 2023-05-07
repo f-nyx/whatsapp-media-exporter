@@ -13,7 +13,7 @@
     "lib": ["ES2022"],
     "baseUrl": "./",
     "paths": {
-      "@extractor/src/*": ["src/*"]
+      "@exporter/src/*": ["src/*"]
     }
   },
   "ts-node": {

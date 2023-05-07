@@ -1,5 +1,5 @@
 {
-  "name": "whatsapp-media-extractor",
+  "name": "whatsapp-media-exporter",
   "version": "1.0.0",
   "description": "Reads the WhatsApp DB and organizes the media in chats",
   "main": "index.js",
@@ -9,7 +9,6 @@
   "author": "nyx",
   "license": "GPL-2.0",
   "dependencies": {
-    "@types/node": "^18.16.3",
     "commander": "^10.0.1",
     "pino": "^8.12.1",
     "pino-pretty": "^10.0.0",
@@ -18,6 +17,7 @@
     "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
+    "@types/node": "^20.1.0",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
     "eslint": "^8.39.0",

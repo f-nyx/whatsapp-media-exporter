@@ -1,14 +1,14 @@
-import { WhatsAppRepository } from '@extractor/src/domain/WhatsAppRepository'
-import { MediaFileRepository } from '@extractor/src/domain/MediaFileRepository'
-import { MediaIndexManager } from '@extractor/src/domain/MediaIndexManager'
-import { AppConfig } from '@extractor/src/AppConfig'
-import { ApplicationContext } from '@extractor/src/ApplicationContext'
-import { DataSource } from '@extractor/src/utils/DataSource'
+import { WhatsAppRepository } from '@exporter/src/domain/WhatsAppRepository'
+import { MediaFileRepository } from '@exporter/src/domain/MediaFileRepository'
+import { MediaIndexManager } from '@exporter/src/domain/MediaIndexManager'
+import { AppConfig } from '@exporter/src/AppConfig'
+import { ApplicationContext } from '@exporter/src/ApplicationContext'
+import { DataSource } from '@exporter/src/utils/DataSource'
 import { open } from 'sqlite'
 import sqlite3 from 'sqlite3'
 import path from 'path'
-import { createLogger } from '@extractor/src/utils/log'
-import { ExportService } from '@extractor/src/domain/ExportService'
+import { createLogger } from '@exporter/src/utils/log'
+import { ExportService } from '@exporter/src/domain/ExportService'
 
 const logger = createLogger('bootstrap')
 

@@ -1,9 +1,9 @@
-import { WhatsAppRepository } from '@extractor/src/domain/WhatsAppRepository'
-import { MediaFileRepository } from '@extractor/src/domain/MediaFileRepository'
-import { MediaIndexManager } from '@extractor/src/domain/MediaIndexManager'
-import { DataSource } from '@extractor/src/utils/DataSource'
-import { ExportService } from '@extractor/src/domain/ExportService'
-import { createLogger } from '@extractor/src/utils/log'
+import { WhatsAppRepository } from '@exporter/src/domain/WhatsAppRepository'
+import { MediaFileRepository } from '@exporter/src/domain/MediaFileRepository'
+import { MediaIndexManager } from '@exporter/src/domain/MediaIndexManager'
+import { DataSource } from '@exporter/src/utils/DataSource'
+import { ExportService } from '@exporter/src/domain/ExportService'
+import { createLogger } from '@exporter/src/utils/log'
 
 const logger = createLogger('ApplicationContext')
 

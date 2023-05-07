@@ -1,5 +1,5 @@
-import { DataSource } from '@extractor/src/utils/DataSource'
-import { MediaFile } from '@extractor/src/domain/model/MediaFile'
+import { DataSource } from '@exporter/src/utils/DataSource'
+import { MediaFile } from '@exporter/src/domain/model/MediaFile'
 
 export class MediaFileRepository {
   constructor(

@@ -1,7 +1,7 @@
 import { program } from 'commander'
-import { AppConfig } from '@extractor/src/AppConfig'
-import { createLogger } from '@extractor/src/utils/log'
-import { createContext } from '@extractor/src/bootstrap'
+import { AppConfig } from '@exporter/src/AppConfig'
+import { createLogger } from '@exporter/src/utils/log'
+import { createContext } from '@exporter/src/bootstrap'
 
 const logger = createLogger('init')
 

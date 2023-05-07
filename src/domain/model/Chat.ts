@@ -1,4 +1,4 @@
-import { Contact } from '@extractor/src/domain/model/Contact'
+import { Contact } from '@exporter/src/domain/model/Contact'
 
 export class Chat {
 

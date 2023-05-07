@@ -1,10 +1,10 @@
 import * as fs from 'node:fs/promises'
 import { existsSync } from 'fs'
-import { MediaFileRepository } from '@extractor/src/domain/MediaFileRepository'
+import { MediaFileRepository } from '@exporter/src/domain/MediaFileRepository'
 import * as path from 'path'
-import { createLogger } from '@extractor/src/utils/log'
-import { MediaFile } from '@extractor/src/domain/model/MediaFile'
-import { MediaIndex } from '@extractor/src/domain/model/MediaIndex'
+import { createLogger } from '@exporter/src/utils/log'
+import { MediaFile } from '@exporter/src/domain/model/MediaFile'
+import { MediaIndex } from '@exporter/src/domain/model/MediaIndex'
 
 const logger = createLogger('MediaIndex')
 

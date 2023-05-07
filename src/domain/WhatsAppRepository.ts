@@ -1,9 +1,9 @@
-import { DataSource } from '@extractor/src/utils/DataSource'
-import { Contact } from '@extractor/src/domain/model/Contact'
-import { Chat } from '@extractor/src/domain/model/Chat'
-import { MediaItem } from '@extractor/src/domain/model/MediaItem'
-import { User } from '@extractor/src/domain/model/User'
-import { createLogger } from '@extractor/src/utils/log'
+import { DataSource } from '@exporter/src/utils/DataSource'
+import { Contact } from '@exporter/src/domain/model/Contact'
+import { Chat } from '@exporter/src/domain/model/Chat'
+import { MediaItem } from '@exporter/src/domain/model/MediaItem'
+import { User } from '@exporter/src/domain/model/User'
+import { createLogger } from '@exporter/src/utils/log'
 
 const logger = createLogger('WhatsAppRepository')
 
