@@ -98,6 +98,11 @@ tool that uses an old version of WhatsApp to trick the operating system. It inst
 your phone without deleting your existing data, and then it uses an old backup feature to copy the unencrypted
 database from the phone to your computer. It restores your current version of WhatsApp at the end.
 
+It generates a tar file and you will find the `msgstore.db` file inside the tar. You can also extract the `key`
+file that is inside the tar. Using the `key` file you can decrypt the database backup and you don't need to run
+this tool every time you want to synchronize the media files. Look at the _Decrypt WhatsApp Database Backup_ section
+for further information.
+
 **WARNING: this tool does not delete your current WhatsApp data, but JUST IN CASE you must do a full backup of your
 WhatsApp data directory. If you followed the instructions in the _Copying WhatsApp Data Directory_ section you
 should have a full backup already.**
@@ -109,6 +114,21 @@ we used in the _Copying WhatsApp Data Directory_ section:
 ```shell
 python ./src/adbsync.py push [local-data-directory] /sdcard/Android/media/com.whatsapp/WhatsApp
 ```
+
+## Decrypt WhatsApp Database Backup (non-root)
+
+If you have the WhatsApp `key` file to encrypt/decrypt the database, you don't need to make a full backup every time
+you want to synchronize the media files. Using [wa-crypt-tools](https://github.com/ElDavoo/wa-crypt-tools) you can just
+decrypt the last backup that's stored in the WhatsApp data directory.
+
+1. Clone the `wa-crypt-tools` repository
+2. Locate the `msgstore.db.crypt14` file in the `Databases/` directory inside the WhatsApp data directory
+3. Run the following command inside the wa-crypt-tools repository:
+   ```
+   python3 ./src/wa_crypt_tools/decrypt14_15.py key-file msgstore.db.crypt14 msgstore-decrypted.db
+   ```
+
+Now you can use the `msgstore-decrypted.db` to run this application.
 
 ## TODO
 
