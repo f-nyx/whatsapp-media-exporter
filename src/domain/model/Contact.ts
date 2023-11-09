@@ -1,5 +1,5 @@
 export class Contact {
-  static create(displayName: string, phoneNumber: number): Contact {
+  static create(displayName: string, phoneNumber?: number): Contact {
     return new Contact(displayName, phoneNumber)
   }
 
@@ -10,7 +10,7 @@ export class Contact {
   private constructor(
     /** Contact display name. */
     readonly displayName: string,
-    /** Contact phone number. */
-    readonly phoneNumber: number,
+    /** Contact phone number, if any. This is undefined for group chats. */
+    readonly phoneNumber?: number,
   ) {}
 }

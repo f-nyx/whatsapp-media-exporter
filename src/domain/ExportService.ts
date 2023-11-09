@@ -22,10 +22,13 @@ export class ExportService {
     private readonly outputDir: string
   ) {}
 
-  async export(contacts: Contact[]) {
+  async export(
+    contacts: Contact[],
+    groupsNames: string[]
+  ) {
     logger.info(`exporting content for ${contacts.length} contacts`)
     const mediaIndex = await this.mediaIndexManager.loadIndex()
-    const chats = await this.whatsAppRepository.findChats(contacts)
+    const chats = await this.whatsAppRepository.findChats(contacts, groupsNames)
     const jobCount = os.availableParallelism()
 
     logger.info(`using ${jobCount} jobs`)
@@ -34,7 +37,7 @@ export class ExportService {
       const mediaItems = await this.whatsAppRepository.findMediaItems(chat)
       let jobItems
 
-      logger.info(`total media items for ${chat.contact.phoneNumber}: ${mediaItems.length}`)
+      logger.info(`total media items for ${chat.displayName}: ${mediaItems.length}`)
 
       do {
         jobItems = mediaItems.splice(0, jobCount)
@@ -60,7 +63,7 @@ export class ExportService {
     logger.info(`exporting: ${mediaFile.path}`)
     const targetDir = path.join(
       this.outputDir,
-      chat.contact.displayName,
+      chat.displayName,
       path.dirname(mediaFile.path).substring('Media/'.length)
     )
 

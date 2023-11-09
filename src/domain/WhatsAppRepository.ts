@@ -13,10 +13,13 @@ export class WhatsAppRepository {
     private readonly messageDb: DataSource
   ) {}
 
-  async findChats(contacts: Contact[]): Promise<Chat[]> {
+  async findChats(
+    contacts: Contact[],
+    groupsNames: string[]
+  ): Promise<Chat[]> {
     logger.info(`finding chats for ${contacts.length} contacts`)
 
-    const users: User[] = await this.findUsers(contacts.map((contact) => contact.phoneNumber))
+    const users: User[] = await this.findUsers(contacts.map((contact) => contact.phoneNumber as number))
     const usersContactMap = users.reduce((usersContact: any, user: User) => {
       if (usersContact[user.id]) {
         return usersContact
@@ -31,12 +34,28 @@ export class WhatsAppRepository {
         users.map((user: User) => user.id).join(',')
       )
     )
+    const groups = (
+      await Promise.all(
+        groupsNames.map(async (groupName) => {
+          const records = await this.messageDb.find(
+            `select _id, jid_row_id, subject from chat where subject like '%${groupName}%'`
+          )
+          if (records.length === 0) {
+            logger.info(`group not found: ${groupName}`)
+          }
+          return records
+        })
+      )
+    ).flat()
 
-    return chats.map((chat: any) => Chat.create(chat._id, chat.jid_row_id, usersContactMap[chat.jid_row_id]))
+    return [...chats, ...groups].map((chat: any) => {
+      const contact = usersContactMap[chat.jid_row_id] ?? Contact.create(chat.subject)
+      return Chat.create(chat._id, chat.jid_row_id, contact)
+    })
   }
 
   async findMediaItems(chat: Chat): Promise<MediaItem[]> {
-    logger.info(`finding media items for contact: ${chat.contact.phoneNumber}`)
+    logger.info(`finding media items for contact/chat: ${chat.displayName}`)
 
     const mediaItems = await this.messageDb.find(
       'select chat_row_id, message_row_id, media_name, file_path, file_size, mime_type, file_hash ' +

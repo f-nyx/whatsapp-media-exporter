@@ -7,15 +7,18 @@ const EXPORTER_DB_FILE = 'exporter.db'
 export class AppConfig {
   private static instance: AppConfig
 
-  static initFromFile(jsonFile: string) {
+  static initFromFile(jsonFile: string): AppConfig {
     const jsonConfig = JSON.parse(fs.readFileSync(jsonFile).toString())
     AppConfig.instance = new AppConfig(
       AppConfig.requireNotNull('dataDir', jsonConfig.dataDir),
       AppConfig.requireNotNull('messagesDb', jsonConfig.messagesDb),
       AppConfig.requireNotNull('outputDir', jsonConfig.outputDir),
       jsonConfig.contacts.map(Contact.restore),
-      jsonConfig.logLevel || 'info'
+      jsonConfig.logLevel || 'info',
+      jsonConfig.groupsNames ?? []
     )
+
+    return AppConfig.get()
   }
 
   static requireNotNull(name: string, value?: string) {
@@ -40,7 +43,9 @@ export class AppConfig {
     /** Contacts to extract. */
     readonly contacts: Contact[],
     /** Application log level, default is INFO. */
-    readonly logLevel: string
+    readonly logLevel: string,
+    /** Names of the groups to export. */
+    readonly groupsNames: string[]
   ) {}
 
   get exporterDbFile(): string {

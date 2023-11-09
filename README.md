@@ -29,18 +29,20 @@ create the following JSON configuration file:
       "displayName": "John Doe",
       "phoneNumber": "5491133748596"
     }
-  ]
+  ],
+  "groupsNames": ["My Group Chat"]
 }
 ```
 
 The following table describes the available configuration options.
 
-| Field      | Description                                                           | Required |
-|------------|-----------------------------------------------------------------------|----------|
-| dataDir    | WhatsApp data directory.                                              | yes      |
-| messagesDb | Full path to the WhatsApp messages database.                          | yes      |
-| outputDir  | Directory to store the contacts directories with their media content. | yes      |
-| contacts   | An array of Contacts to export.                                       | yes      |
+| Field        | Description                                                                            | Required |
+|--------------|----------------------------------------------------------------------------------------|----------|
+| dataDir      | WhatsApp data directory.                                                               | yes      |
+| messagesDb   | Full path to the WhatsApp messages database.                                           | yes      |
+| outputDir    | Directory to store the contacts directories with their media content.                  | yes      |
+| contacts     | An array of Contacts to export.                                                        | yes      |
+| groupsNames  | List of group chats names. It supports partial names and matches the first occurrence. | yes      |
 
 Note that by default this application does not export ALL contacts. There are two reasons for that. The first reason is
 that the WhatsApp messages database has no contact names, only phone numbers. Creating the contacts directories using

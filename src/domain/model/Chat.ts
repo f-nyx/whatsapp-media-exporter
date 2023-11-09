@@ -14,4 +14,8 @@ export class Chat {
     /** Contact on this chat. */
     readonly contact: Contact
   ) {}
+
+  get displayName(): string {
+    return this.contact.displayName
+  }
 }
