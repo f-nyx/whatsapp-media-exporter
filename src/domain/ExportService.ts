@@ -74,8 +74,16 @@ export class ExportService {
     // Copies the file
     const sourceFile = path.join(this.dataDir, mediaFile.path)
     const targetFile = path.join(targetDir, path.basename(mediaFile.path))
+
+    if (!existsSync(sourceFile)) {
+      logger.info(`source file does not exist: ${sourceFile}`)
+      return
+    }
+
     if (!existsSync(targetFile)) {
-      await fs.copyFile(sourceFile, targetFile)
+      await fs.rename(sourceFile, targetFile)
+    } else {
+      logger.info(`target file already exist: ${targetFile}`)
     }
 
     // Marks the media file as processed
