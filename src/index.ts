@@ -11,7 +11,7 @@ async function run(configFile: string) {
   const context = await createContext(config)
 
   await context.initialize()
-  await context.mediaIndexManager.updateIndex()
+  // await context.mediaIndexManager.updateIndex()
   await context.exportService.export(config.contacts, config.groupsNames)
 
   await context.close()

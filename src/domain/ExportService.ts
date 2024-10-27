@@ -10,6 +10,7 @@ import { MediaItem } from '@exporter/src/domain/model/MediaItem'
 import * as path from 'path'
 import * as fs from 'node:fs/promises'
 import { MediaFile } from '@exporter/src/domain/model/MediaFile'
+import { existsSync } from 'fs'
 
 const logger = createLogger('ExportService')
 
@@ -73,7 +74,9 @@ export class ExportService {
     // Copies the file
     const sourceFile = path.join(this.dataDir, mediaFile.path)
     const targetFile = path.join(targetDir, path.basename(mediaFile.path))
-    await fs.copyFile(sourceFile, targetFile)
+    if (!existsSync(targetFile)) {
+      await fs.copyFile(sourceFile, targetFile)
+    }
 
     // Marks the media file as processed
     await this.mediaFileRepository.update(mediaFile.exported())

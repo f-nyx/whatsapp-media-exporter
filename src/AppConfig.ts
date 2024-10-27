@@ -13,6 +13,7 @@ export class AppConfig {
       AppConfig.requireNotNull('dataDir', jsonConfig.dataDir),
       AppConfig.requireNotNull('messagesDb', jsonConfig.messagesDb),
       AppConfig.requireNotNull('outputDir', jsonConfig.outputDir),
+      AppConfig.requireNotNull('contactsFile', jsonConfig.contactsFile),
       jsonConfig.contacts.map(Contact.restore),
       jsonConfig.logLevel || 'info',
       jsonConfig.groupsNames ?? []
@@ -40,6 +41,8 @@ export class AppConfig {
     readonly messagesDbFile: string,
     /** Extractor output directory. */
     readonly outputDir: string,
+    /** Path to the contacts file in VCF format. */
+    readonly contactsFile: string,
     /** Contacts to extract. */
     readonly contacts: Contact[],
     /** Application log level, default is INFO. */

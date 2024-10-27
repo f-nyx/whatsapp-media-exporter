@@ -7,6 +7,6 @@ export class User {
     /** WhatsApp unique identifier. */
     readonly id: number,
     /** User phone number. */
-    readonly phoneNumber: number
+    readonly phoneNumber: string
   ) {}
 }

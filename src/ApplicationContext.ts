@@ -4,6 +4,7 @@ import { MediaIndexManager } from '@exporter/src/domain/MediaIndexManager'
 import { DataSource } from '@exporter/src/utils/DataSource'
 import { ExportService } from '@exporter/src/domain/ExportService'
 import { createLogger } from '@exporter/src/utils/log'
+import { ContactService } from '@exporter/src/domain/ContactService'
 
 const logger = createLogger('ApplicationContext')
 
@@ -13,6 +14,7 @@ export class ApplicationContext {
     readonly mediaFileRepository: MediaFileRepository,
     readonly mediaIndexManager: MediaIndexManager,
     readonly exportService: ExportService,
+    readonly contactService: ContactService,
     readonly messagesDb: DataSource,
     readonly exporterDb: DataSource
   ) {}
@@ -20,6 +22,7 @@ export class ApplicationContext {
   async initialize() {
     logger.info('initializing application context')
     await this.mediaFileRepository.createTablesIfRequired()
+    await this.contactService.loadContacts()
   }
 
   async close() {

@@ -9,6 +9,7 @@ import sqlite3 from 'sqlite3'
 import path from 'path'
 import { createLogger } from '@exporter/src/utils/log'
 import { ExportService } from '@exporter/src/domain/ExportService'
+import { ContactService } from '@exporter/src/domain/ContactService'
 
 const logger = createLogger('bootstrap')
 
@@ -32,7 +33,8 @@ export async function createContext(config: AppConfig): Promise<ApplicationConte
   )
 
   logger.info('creating application components')
-  const whatsAppRepository = new WhatsAppRepository(messagesDb)
+  const contactService = new ContactService(config.contactsFile)
+  const whatsAppRepository = new WhatsAppRepository(messagesDb, contactService)
   const mediaFileRepository = new MediaFileRepository(exporterDb)
   await mediaFileRepository.createTablesIfRequired()
   const mediaIndexManager = new MediaIndexManager(mediaFileRepository, path.resolve(dataDir))
@@ -49,6 +51,7 @@ export async function createContext(config: AppConfig): Promise<ApplicationConte
     mediaFileRepository,
     mediaIndexManager,
     exportService,
+    contactService,
     messagesDb,
     exporterDb
   )

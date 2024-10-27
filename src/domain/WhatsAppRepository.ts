@@ -4,13 +4,15 @@ import { Chat } from '@exporter/src/domain/model/Chat'
 import { MediaItem } from '@exporter/src/domain/model/MediaItem'
 import { User } from '@exporter/src/domain/model/User'
 import { createLogger } from '@exporter/src/utils/log'
+import { ContactService } from '@exporter/src/domain/ContactService'
 
 const logger = createLogger('WhatsAppRepository')
 
 export class WhatsAppRepository {
   constructor(
     /** Data source to read WhatsApp database. */
-    private readonly messageDb: DataSource
+    private readonly messageDb: DataSource,
+    private readonly contactService: ContactService,
   ) {}
 
   async findChats(
@@ -24,7 +26,7 @@ export class WhatsAppRepository {
       if (usersContact[user.id]) {
         return usersContact
       }
-      usersContact[user.id] = contacts.find((contact) => user.phoneNumber === contact.phoneNumber)
+      usersContact[user.id] = this.contactService.findByPhoneNumber(user.phoneNumber)
       return usersContact
     }, {})
 
@@ -50,8 +52,11 @@ export class WhatsAppRepository {
 
     return [...chats, ...groups].map((chat: any) => {
       const contact = usersContactMap[chat.jid_row_id] ?? Contact.create(chat.subject)
+      if (!usersContactMap[chat.jid_row_id] && !chat.subject) {
+        return undefined
+      }
       return Chat.create(chat._id, chat.jid_row_id, contact)
-    })
+    }).filter((chat) => chat !== undefined) as Chat[]
   }
 
   async findMediaItems(chat: Chat): Promise<MediaItem[]> {
