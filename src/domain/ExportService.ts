@@ -81,7 +81,7 @@ export class ExportService {
     }
 
     if (!existsSync(targetFile)) {
-      await fs.rename(sourceFile, targetFile)
+      await fs.copyFile(sourceFile, targetFile)
     } else {
       logger.info(`target file already exist: ${targetFile}`)
     }

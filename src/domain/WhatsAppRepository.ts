@@ -52,7 +52,7 @@ export class WhatsAppRepository {
 
     return [...chats, ...groups].map((chat: any) => {
       const contact = usersContactMap[chat.jid_row_id] ?? Contact.create(chat.subject)
-      if (!usersContactMap[chat.jid_row_id] && !chat.subject) {
+      if (!usersContactMap[chat._id] && !chat.subject) {
         return undefined
       }
       return Chat.create(chat._id, chat.jid_row_id, contact)

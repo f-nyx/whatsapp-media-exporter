@@ -11,8 +11,16 @@ async function run(configFile: string) {
   const context = await createContext(config)
 
   await context.initialize()
-  // await context.mediaIndexManager.updateIndex()
-  await context.exportService.export(config.contacts, config.groupsNames)
+  await context.mediaIndexManager.updateIndex()
+
+  let contacts = config.contacts
+
+  if (contacts.length === 0) {
+    // By default, it exports all contacts.
+    contacts = context.contactService.contacts
+  }
+
+  await context.exportService.export(contacts, config.groupsNames)
 
   await context.close()
 }
