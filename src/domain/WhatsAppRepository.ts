@@ -31,11 +31,12 @@ export class WhatsAppRepository {
     }, {})
 
     const chats = await this.messageDb.find(
-      'select _id, jid_row_id from chat where jid_row_id in (:usersIds)'.replace(
+      'select _id, jid_row_id from chat where jid_row_id in (:usersIds) and hidden = 0'.replace(
         ':usersIds',
         users.map((user: User) => user.id).join(',')
       )
     )
+
     const groups = (
       await Promise.all(
         groupsNames.map(async (groupName) => {
@@ -52,7 +53,7 @@ export class WhatsAppRepository {
 
     return [...chats, ...groups].map((chat: any) => {
       const contact = usersContactMap[chat.jid_row_id] ?? Contact.create(chat.subject)
-      if (!usersContactMap[chat._id] && !chat.subject) {
+      if (!usersContactMap[chat.jid_row_id] && !chat.subject) {
         return undefined
       }
       return Chat.create(chat._id, chat.jid_row_id, contact)
@@ -73,8 +74,8 @@ export class WhatsAppRepository {
 
   async findUsers(phoneNumbers: number[]): Promise<User[]> {
     logger.info('finding users')
-    const selectAll = 'select _id, user from jid'
-    const selectSome = 'select _id, user from jid where user in (:phoneNumbers)'.replace(':phoneNumbers', phoneNumbers.join(','))
+    const selectAll = 'select _id, user from jid order by _id'
+    const selectSome = 'select _id, user from jid where user in (:phoneNumbers) order by _id'.replace(':phoneNumbers', phoneNumbers.join(','))
 
     if (phoneNumbers.length > 0) {
       return (await this.messageDb.find(selectSome)).map(User.restore)
