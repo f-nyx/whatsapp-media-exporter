@@ -31,7 +31,7 @@ export class WhatsAppRepository {
     }, {})
 
     const chats = await this.messageDb.find(
-      'select _id, jid_row_id from chat where jid_row_id in (:usersIds) and hidden = 0'.replace(
+      'select _id, jid_row_id from chat where jid_row_id in (:usersIds)'.replace(
         ':usersIds',
         users.map((user: User) => user.id).join(',')
       )
