@@ -23,6 +23,7 @@ create the following JSON configuration file:
 {
   "dataDir": "./data/WhatsApp",
   "messagesDb": "./data/msgstore.db",
+  "contactsFile": "./data/contacts.vcf",
   "outputDir": "./out",
   "contacts": [
     {
@@ -40,16 +41,13 @@ The following table describes the available configuration options.
 |--------------|----------------------------------------------------------------------------------------|----------|
 | dataDir      | WhatsApp data directory.                                                               | yes      |
 | messagesDb   | Full path to the WhatsApp messages database.                                           | yes      |
+| contactsFile | Full path to the VCF file with your contacts exported from the Contacts app.           | yes      |
 | outputDir    | Directory to store the contacts directories with their media content.                  | yes      |
 | contacts     | An array of Contacts to export.                                                        | yes      |
 | groupsNames  | List of group chats names. It supports partial names and matches the first occurrence. | yes      |
 
-Note that by default this application does not export ALL contacts. There are two reasons for that. The first reason is
-that the WhatsApp messages database has no contact names, only phone numbers. Creating the contacts directories using
-the phone number instead of a name will make it difficult to find contacts, which is the main goal of this project: it
-aims to simplify the relationship between contacts and media files. The second reason is a design decision: most times
-you don't care about most of your contacts, so it is better to restrict the content you want to export to the relevant
-contacts.
+By default, if no contacts are defined in the configuration, this application exports ALL contacts. It uses the VCF file
+to read the contact names since the WhatsApp database doesn't store contact names, only phone numbers.
 
 The export process __copies__ the files from the WhatsApp data directory into the contacts directories. It means that
 in the worst case you will need `sizeOf(dataDir)` available space in your device to run this application.
