@@ -74,13 +74,13 @@ export class WhatsAppRepository {
 
   async findUsers(phoneNumbers: number[]): Promise<User[]> {
     logger.info('finding users')
-    const selectAll = 'select _id, user from jid order by _id'
-    const selectSome = 'select _id, user from jid where user in (:phoneNumbers) order by _id'.replace(':phoneNumbers', phoneNumbers.join(','))
+    const selectAll = 'select _id, user from jid group by user order by _id'
+    const users = (await this.messageDb.find(selectAll)).map(User.restore)
 
     if (phoneNumbers.length > 0) {
-      return (await this.messageDb.find(selectSome)).map(User.restore)
+      return users.filter((user: User) => phoneNumbers.some((phoneNumber) => user.phoneNumber.endsWith(phoneNumber.toString())))
     } else {
-      return (await this.messageDb.find(selectAll)).map(User.restore)
+      return users
     }
   }
 }
