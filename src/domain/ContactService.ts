@@ -31,7 +31,7 @@ export class ContactService {
     this.contacts = vCards.map((vCard) => {
       let normalizedPhone
       if (Array.isArray(vCard.data.tel)) {
-        normalizedPhone = (vCard.data.tel[0]?.valueOf()?.toString() ?? '0').replace(/-/g, '').trim()
+        normalizedPhone = (vCard.data.tel[0]?.valueOf()?.toString() ?? '0').replace(/[-+]/g, '').trim()
       } else {
         normalizedPhone = (vCard.data.tel?.valueOf()?.toString() ?? '0').replace(/-/g, '').trim()
       }
